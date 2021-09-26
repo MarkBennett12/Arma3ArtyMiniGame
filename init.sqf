@@ -1,0 +1,1 @@
+// arty_track_shots = Compile PreprocessFile ("arty_track_shots.sqf");
