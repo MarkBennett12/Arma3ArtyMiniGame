@@ -1,12 +1,16 @@
 params ["_artyPiece"];
+private _shotCount = 0;
 
-diag_log format ["arty_track_shots started for %1", name _artyPiece];
+diag_log format ["arty_track_shots started for %1", typeOf _artyPiece];
+
+
+
 
 waitUntil {alive _artyPiece};
 
 while {alive _artyPiece} do
 {  
-  hint format ["%1 is alive", name  _artyPiece];
-  diag_log format ["%1 is alive", name  _artyPiece];
-  sleep 60;
+  sleep 10;
+  diag_log format ["%1 is still alive", typeOf  _artyPiece];
 };
+
