@@ -1,0 +1,1 @@
+[arty] spawn arty_track_shots;
