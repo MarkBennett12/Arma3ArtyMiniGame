@@ -1,36 +1,29 @@
+// tracks the shots
 Arty_shot_count = 0;
 publicVariable "Arty_shot_count";
 
-// marker_funcLocal =
-// {
-  // params ["_marker_pos", "_shot_count"];
-  
-  // diag_log format ["_marker_pos = %1", _marker_pos];
-  
-  // deleteMarker "ArtilleryLocation";
-  
-  // private _size = 2000 / Arty_shot_count;
-  
-  // private _marker_alpha = 1;
-  // private _arty_location_marker = createMarkerLocal ["ArtilleryLocation", _marker_pos];
-  // _arty_location_marker setMarkerColorLocal "ColorRed";
-  // _arty_location_marker setMarkerShapeLocal "ELLIPSE";
-  // _arty_location_marker setMarkerBrushLocal "FDiagonal";
-  // _arty_location_marker setMarkerSizeLocal [_size, _size];
-  
-// };
+// adjustable paramters
+uncertainty_dist = 500;
+publicVariable "uncertainty_dist";
+max_size = 1500;
+publicVariable "max_size";
+min_size = 100;
+publicVariable "min_size";
 
+set_marker = compileFinal preprocessfilelinenumbers "scripts\set_marker.sqf";
+arty_track_shots = compileFinal preprocessfilelinenumbers "scripts\arty_track_shots.sqf";
+
+marker_script_handle = nil;
+publicVariable "marker_script_handle";
+
+// fired event counts shots and sets marker on target machines
 enemy_arty addEventHandler ["Fired", {
 	params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+
+  hint format ["%1 fired from location %2", typeOf _unit, position _unit];
   
   Arty_shot_count = Arty_shot_count + 1;
   publicVariable "Arty_shot_count";
   
-  private _location = position _unit;
-
-  diag_log format ["%1 fired from location %2", typeOf _unit, _location];
-  
-  [_location] remoteExec ["marker_funcLocal"];
+  [_unit] remoteExec ["arty_track_shots"];
 }];
-
-diag_log format ["should have created event handler now"];
