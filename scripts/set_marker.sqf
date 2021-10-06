@@ -29,10 +29,11 @@ _arty_location_marker setMarkerSizeLocal [_size, _size];
 "ArtilleryLocation" setMarkerAlphaLocal _marker_alpha;
 
 // fade the marker out over time
+private _increment = 1 / decay_rate;
 while {_marker_alpha > 0} do
 {
   sleep 1;
-  _marker_alpha = _marker_alpha - 0.1;
+  _marker_alpha = _marker_alpha - _increment;
   "ArtilleryLocation" setMarkerAlphaLocal _marker_alpha;
 };
 

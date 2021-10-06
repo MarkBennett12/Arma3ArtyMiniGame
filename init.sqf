@@ -9,7 +9,10 @@ max_size = 1500;
 publicVariable "max_size";
 min_size = 100;
 publicVariable "min_size";
+decay_rate = 20;
+publicVariable "decay_rate";
 
+// scripts for the marker
 set_marker = compileFinal preprocessfilelinenumbers "scripts\set_marker.sqf";
 arty_track_shots = compileFinal preprocessfilelinenumbers "scripts\arty_track_shots.sqf";
 
