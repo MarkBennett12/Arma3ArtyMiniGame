@@ -1,4 +1,4 @@
-params ["_marker_pos"];
+params ["_marker_pos", "_shot_count"];
 
 // remove any previous markers before placing a new one
 deleteMarker "ArtilleryLocation";
@@ -7,10 +7,10 @@ deleteMarker "ArtilleryLocation";
 private _dist = uncertainty_dist;
 private _size = max_size;
 
-if(Arty_shot_count > 0) then
+if(_shot_count > 0) then
 {
-  _dist = uncertainty_dist / Arty_shot_count;
-  _size = min_size + ((max_size - min_size) / Arty_shot_count);
+  _dist = uncertainty_dist / _shot_count;
+  _size = min_size + ((max_size - min_size) / _shot_count);
 };
 
 // offset the marker by the uncertainty distance which gets reduced by each shot
