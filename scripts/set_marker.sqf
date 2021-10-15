@@ -9,8 +9,8 @@ private _size = max_size;
 
 if(_shot_count > 0) then
 {
-  _dist = uncertainty_dist / _shot_count;
-  _size = min_size + ((max_size - min_size) / _shot_count);
+    _dist = uncertainty_dist / _shot_count;
+    _size = min_size + ((max_size - min_size) / _shot_count);
 };
 
 // offset the marker by the uncertainty distance which gets reduced by each shot
@@ -32,9 +32,9 @@ _arty_location_marker setMarkerSizeLocal [_size, _size];
 private _increment = 1 / decay_rate;
 while {_marker_alpha > 0} do
 {
-  sleep 1;
-  _marker_alpha = _marker_alpha - _increment;
-  "ArtilleryLocation" setMarkerAlphaLocal _marker_alpha;
+    sleep 1;
+    _marker_alpha = _marker_alpha - _increment;
+    "ArtilleryLocation" setMarkerAlphaLocal _marker_alpha;
 };
 
 // clean up afterwards
