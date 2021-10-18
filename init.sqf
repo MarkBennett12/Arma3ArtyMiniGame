@@ -20,7 +20,7 @@ publicVariable "marker_script_handle";
 ShotCount = [];
 publicVariable "ShotCount";
 
-// [marker position, marker size, marker fade time]
+// [marker handle, marker name, marker position, marker size, marker fade time]
 ShotLocationMarkers = [];
 
 TAG_fnc_AddArty = 
@@ -28,14 +28,27 @@ TAG_fnc_AddArty =
     params ["_artillery_unit"];
 
     // fired event counts shots and sets marker on target machines
-    _artillery_unit addEventHandler ["Fired", {
+    _artillery_unit addEventHandler ["Fired",
+    {
         params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
         
         diag_log format ["%1 fired from %2", _unit, getPos _unit];
         
         [getPos _unit] spawn arty_track_shots;
     }]; 
+    
 };
+
+addMissionEventHandler ["EachFrame",
+{
+    if (count ShotLocationMarkers > 0) then
+    {
+        {
+            
+        } forEach ShotLocationMarkers;
+    };
+}];
+
 
 
 [enemy_arty1] call TAG_fnc_AddArty;

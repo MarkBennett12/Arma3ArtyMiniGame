@@ -18,6 +18,8 @@ if ((count ShotCount) > 0) then
             // increment shot count at this position
             _x set [1, ((_x select 1) + 1)];
             
+            [(_x select 0), (_x select 1)] spawn set_marker;
+            
             _shot_counted = true;
         }
     }
@@ -27,7 +29,7 @@ if ((count ShotCount) > 0) then
 if(_shot_counted == false) then
 {
     ShotCount pushBack [_shot_pos, 1, []];
-    ShotLocationMarkers pushBack [_shot_pos, max_marker_size, marker_decay_rate];
+    [_shot_pos, 1] spawn set_marker;    
 };
 
 //hint format ["%1 shots fired from location %2", (ShotCount select 1), (ShotCount select 0)];
