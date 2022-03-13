@@ -1,16 +1,12 @@
 // adjustable paramters
-uncertainty_dist = 200;
-publicVariable "uncertainty_dist";
 max_marker_size = 1500;
 publicVariable "max_marker_size";
 min_marker_size = 100;
 publicVariable "min_marker_size";
-marker_decay_rate = 10;
-publicVariable "marker_decay_rate";
 
-// // [marker handle, marker name, marker position, marker size, marker fade time]
-// ShotLocationMarkers = [];
-// publicVariable "ShotLocationMarkers";
+// [marker handle, marker name, marker position, marker size, marker creation time]
+ShotLocationMarkers = [];
+publicVariable "ShotLocationMarkers";
 
 TAG_fnc_AddArty = 
 {
@@ -21,17 +17,31 @@ TAG_fnc_AddArty =
     {
         params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
         
-        diag_log format ["%1 fired from %2", _unit, getPos _unit];
+        // make location uncertain
+        private _location = [];
+        _location set [0, ((getPos _unit select 0) + (random (max_marker_size * 2)) - max_marker_size)];
+        _location set [1, ((getPos _unit select 1) + (random (max_marker_size * 2)) - max_marker_size)];
+        
         
         // place the marker
-        private _marker_handle = createMarkerLocal [name _unit, getPos _unit];
+        private _marker_handle = createMarkerLocal [name _unit, _location];
         _marker_handle setMarkerColorLocal "ColorRed";
         _marker_handle setMarkerShapeLocal "ELLIPSE";
         _marker_handle setMarkerBrushLocal "FDiagonal";
         _marker_handle setMarkerSizeLocal [max_marker_size, max_marker_size];
+        
+        
+        // add marker to array
+        //ShotLocationMarkers pushBack [];
     }]; 
     
 };
+
+
+
+
+
+
 
 // addMissionEventHandler ["EachFrame",
 // {
