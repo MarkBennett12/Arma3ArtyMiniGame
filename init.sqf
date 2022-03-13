@@ -1,7 +1,7 @@
 // adjustable paramters
-max_marker_size = 1500;
+max_marker_size = 1000;
 publicVariable "max_marker_size";
-min_marker_size = 100;
+min_marker_size = 200;
 publicVariable "min_marker_size";
 
 // [marker handle, marker name, marker position, marker size, marker creation time]
@@ -21,12 +21,19 @@ TAG_fnc_AddArty =
         
         // are we within an existng marker
         private _foundResult = ShotLocationMarkers findIf { (_x select 2) distance getPos _unit < _markerSize };
-        hint str _foundResult;
         
         if(_foundResult > -1) then
         {
-            // shrink the marker size
-            _markerSize = ((ShotLocationMarkers select _foundResult) select 3) / 2;
+            // shrink the marker size to min size
+            private _oldMarkerSize = ((ShotLocationMarkers select _foundResult) select 3);
+            if(_oldMarkerSize < min_marker_size) then
+            {
+                _markerSize = min_marker_size;
+            }
+            else
+            {
+                _markerSize = _oldMarkerSize / 2;
+            };
 
             // remove the old marker
             deleteMarker ((ShotLocationMarkers select _foundResult) select 1);            
@@ -34,9 +41,12 @@ TAG_fnc_AddArty =
         };
         
         // make location uncertain
+        private _randomOffset = random [0 -_markerSize, 0, _markerSize];
+        hint str _randomOffset;
+        
         private _location = [];
-        _location set [0, ((getPos _unit select 0) + (random (_markerSize * 2)) - _markerSize)];
-        _location set [1, ((getPos _unit select 1) + (random (_markerSize * 2)) - _markerSize)];
+        _location set [0, (getPos _unit select 0) + _randomOffset];
+        _location set [1, (getPos _unit select 1) + _randomOffset];
         
         // create marker name based on position
         private _xStr = str (round (_location select 0));
