@@ -22,9 +22,16 @@ TAG_fnc_AddArty =
         _location set [0, ((getPos _unit select 0) + (random (max_marker_size * 2)) - max_marker_size)];
         _location set [1, ((getPos _unit select 1) + (random (max_marker_size * 2)) - max_marker_size)];
         
+        // create marker name based on position
+        private _xStr = str (round (_location select 0));
+        private _yStr = str (round (_location select 1));
+        private _markerName = _xStr + _yStr;
+        
+        hint _markerName;
+        
         
         // place the marker
-        private _marker_handle = createMarkerLocal [name _unit, _location];
+        private _marker_handle = createMarkerLocal [_markerName, _location];
         _marker_handle setMarkerColorLocal "ColorRed";
         _marker_handle setMarkerShapeLocal "ELLIPSE";
         _marker_handle setMarkerBrushLocal "FDiagonal";
