@@ -26,10 +26,7 @@ TAG_fnc_AddArty =
         private _xStr = str (round (_location select 0));
         private _yStr = str (round (_location select 1));
         private _markerName = _xStr + _yStr;
-        
-        hint _markerName;
-        
-        
+                
         // place the marker
         private _marker_handle = createMarkerLocal [_markerName, _location];
         _marker_handle setMarkerColorLocal "ColorRed";
@@ -38,8 +35,10 @@ TAG_fnc_AddArty =
         _marker_handle setMarkerSizeLocal [max_marker_size, max_marker_size];
         
         
-        // add marker to array
-        //ShotLocationMarkers pushBack [];
+        // keep track of the markers
+        ShotLocationMarkers pushBack [_marker_handle, _markerName, _location, max_marker_size, serverTime];
+        
+        diag_log ShotLocationMarkers;
     }]; 
     
 };
