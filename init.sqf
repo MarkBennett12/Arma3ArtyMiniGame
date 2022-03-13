@@ -8,20 +8,9 @@ publicVariable "min_marker_size";
 marker_decay_rate = 10;
 publicVariable "marker_decay_rate";
 
-// scripts for the marker
-set_marker = compileFinal preprocessfilelinenumbers "scripts\set_marker.sqf";
-arty_track_shots = compileFinal preprocessfilelinenumbers "scripts\arty_track_shots.sqf";
-
-marker_script_handle = nil;
-publicVariable "marker_script_handle";
-
-// tracks the shots
-// [shot position, shotcount, target location]
-ShotCount = [];
-publicVariable "ShotCount";
-
-// [marker handle, marker name, marker position, marker size, marker fade time]
-ShotLocationMarkers = [];
+// // [marker handle, marker name, marker position, marker size, marker fade time]
+// ShotLocationMarkers = [];
+// publicVariable "ShotLocationMarkers";
 
 TAG_fnc_AddArty = 
 {
@@ -34,20 +23,25 @@ TAG_fnc_AddArty =
         
         diag_log format ["%1 fired from %2", _unit, getPos _unit];
         
-        [getPos _unit] spawn arty_track_shots;
+        // place the marker
+        private _marker_handle = createMarkerLocal [name _unit, getPos _unit];
+        _marker_handle setMarkerColorLocal "ColorRed";
+        _marker_handle setMarkerShapeLocal "ELLIPSE";
+        _marker_handle setMarkerBrushLocal "FDiagonal";
+        _marker_handle setMarkerSizeLocal [max_marker_size, max_marker_size];
     }]; 
     
 };
 
-addMissionEventHandler ["EachFrame",
-{
-    if (count ShotLocationMarkers > 0) then
-    {
-        {
-            
-        } forEach ShotLocationMarkers;
-    };
-}];
+// addMissionEventHandler ["EachFrame",
+// {
+    // if (count ShotLocationMarkers > 0) then
+    // {
+        // {
+          
+        // } forEach ShotLocationMarkers;
+    // };
+// }];
 
 
 
