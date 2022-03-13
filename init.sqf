@@ -36,7 +36,7 @@ TAG_fnc_AddArty =
         
         
         // keep track of the markers
-        ShotLocationMarkers pushBack [_marker_handle, _markerName, _location, max_marker_size, serverTime];
+        ShotLocationMarkers pushBack [_marker_handle, _markerName, _location, max_marker_size, time];
         
         diag_log ShotLocationMarkers;
     }]; 
